@@ -3,4 +3,8 @@ Rails.application.routes.draw do
   root 'posts#index'
   resources :posts, only: %i[new show create index destroy]
   resources :feedbacks, only: [:new]
+
+  namespace :api do
+    resource :feedbacks, only: [:create]
+  end
 end
