@@ -4,9 +4,13 @@
     "autobind-decorator": "^2.1.0",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "coffeescript": "1.12.7",
+    "eslint-plugin-flowtype": "^3.12.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
     "prop-types": "^15.6.1",
     "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "react-dom": "^16.8.4",
+    "react-scripts": "^3.0.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.0",
@@ -22,6 +26,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.15.1",
     "eslint-config-appfolio-react": "^1.1.0",
+    "eslint-plugin-import": "^2.18.2",
     "ignore-styles": "^5.0.1",
     "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",
