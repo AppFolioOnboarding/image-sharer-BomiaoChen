@@ -1,3 +1,3 @@
 class ApplicationRecord < ActiveRecord::Base
-  self.abstract_class = truedef hello
+  self.abstract_class = true
 end
