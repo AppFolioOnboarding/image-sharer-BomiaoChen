@@ -7,7 +7,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     if @post.save
       flash[:notice] = 'Post successfully created'
-      head :ok
+      redirect_to post_path(@post)
     else
       flash.now[:error] = 'Image URL Invalid'
       render 'new'

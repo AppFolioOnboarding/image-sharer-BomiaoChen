@@ -29,9 +29,9 @@ class PostControllerTest < ActionDispatch::IntegrationTest
                                          caption: '' } }
     end
 
-    assert_response :ok
-
     new_post = Post.last
+
+    assert_redirected_to post_path(new_post)
     assert_equal new_post.link, 'https://cdn.learnenough.com/kitten.jpg'
   end
 
