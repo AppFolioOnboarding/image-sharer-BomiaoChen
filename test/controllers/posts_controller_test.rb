@@ -40,7 +40,7 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     get post_path(post)
 
     assert_response :ok
-    assert_select 'img[src=?]' , 'https://cdn.learnenough.com/kitten.jpg'
+    assert_select 'img[src=?]', 'https://cdn.learnenough.com/kitten.jpg'
   end
 
   test 'should go back home if id is invalid' do
