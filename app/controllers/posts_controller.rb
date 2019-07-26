@@ -14,6 +14,14 @@ class PostsController < ApplicationController
     end
   end
 
+  def show
+    @post = Post.find_by(id: params[:id])
+    if @post.nil?
+      flash[:error] = 'Image not found'
+      redirect_to new_post_path
+    end
+  end
+
   private
 
   def post_params
