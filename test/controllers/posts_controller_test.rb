@@ -31,7 +31,7 @@ class PostControllerTest < ActionDispatch::IntegrationTest
 
     new_post = Post.last
 
-    assert_redirected_to post_path(new_post)
+    assert_redirected_to posts_path
     assert_equal new_post.link, 'https://cdn.learnenough.com/kitten.jpg'
   end
 
@@ -48,5 +48,26 @@ class PostControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to new_post_path
     assert_equal 'Image not found', flash[:error]
+  end
+
+  test 'should get All images in home page' do
+    get posts_path
+
+    assert_response :ok
+    assert_select '.js-title', 'All Images'
+    assert_select 'a[href=?]', new_post_path
+    assert_select 'image', count: Post.count
+  end
+
+  test 'image in reverse order' do
+    post_first = Post.create!(link: 'https://cdn.learnenough.com/kitten.jpg')
+    post_second = Post.create!(link: 'https://images.pexels.com/photos/356378/pexels-photo-356378.jpeg')
+    get posts_path
+
+    assert_response :ok
+    assert_select 'img' do |elements|
+      assert_equal elements.first.values[2], post_second.link
+      assert_equal elements.last.values[2], post_first.link
+    end
   end
 end
