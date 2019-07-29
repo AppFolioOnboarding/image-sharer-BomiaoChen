@@ -22,7 +22,8 @@ class PostTest < ActiveSupport::TestCase
   test 'link validation should accept valid links' do
     valid_links = %w[https://www.example.com/c.png
                      http://www.example.com/b.gif
-                     www.example.com/a.jpg]
+                     www.example.com/a.jpg
+                     www.example.com/d.jpeg]
     valid_links.each do |valid_link|
       @post.link = valid_link
       assert @post.valid?, "#{valid_link.inspect} should be valid"
