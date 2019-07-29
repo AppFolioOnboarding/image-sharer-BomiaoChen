@@ -7,7 +7,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     if @post.save
       flash[:notice] = 'Post successfully created'
-      redirect_to post_path(@post)
+      redirect_to root_path
     else
       flash.now[:error] = 'Image URL Invalid'
       render 'new'
@@ -23,6 +23,10 @@ class PostsController < ApplicationController
       flash[:error] = 'Image not found'
       redirect_to new_post_path
     end
+  end
+
+  def index
+    @posts = Post.all.reverse
   end
 
   private

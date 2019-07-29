@@ -1,0 +1,7 @@
+<h1 class = 'js-title'>All Images</h1>
+<%= link_to 'New Image', new_post_path %>
+<br>
+<% @posts.each do |post| %>
+    <%= image_tag(post.link, alt: "User Image", width: 400)%>
+  <br>
+<% end %>
