@@ -64,8 +64,8 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     post_second = Post.create!(link: 'https://images.pexels.com/photos/356378/pexels-photo-356378.jpeg')
     get posts_path
     assert_select 'img' do |elements|
-      assert_equal elements.first.values[2], 'https://images.pexels.com/photos/356378/pexels-photo-356378.jpeg'
-      assert_equal elements.last.values[2], 'https://cdn.learnenough.com/kitten.jpg'
+      assert_equal elements.first.values[2], post_second.link
+      assert_equal elements.last.values[2], post_first.link
     end
   end
 end
