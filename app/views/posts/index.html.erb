@@ -1,10 +1,13 @@
 <h1 class = 'js-title'>All Images</h1>
-<%= link_to 'New Image', new_post_path %>
+<div><%= link_to 'New Image', new_post_path %></div>
 <% @posts.each do |post| %>
   <div>
     <%= image_tag(post.link, alt: "User Image", width: 400)%>
-    <div class = 'js-tag'>
-        Tags: <%= post.tag_list %>
+    <div>
+      <span class = 'js-tag'>Tags: </span>
+      <% post.tag_list.each do |tag| %>
+        <%= link_to tag, tagged_path(tag: tag) %>
+      <% end %>
     </div>
   </div>
 <% end %>

@@ -74,14 +74,19 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'images are with associated tags' do
+  test 'images are with associated tags link' do
     post_first = Post.create!(link: 'https://cdn.learnenough.com/kitten.jpg')
     post_first.tag_list.add('cat')
+    post_first.tag_list.add('animal')
     post_first.save
     get posts_path
 
     assert_response :ok
-    assert_select '.js-tag', 'Tags: cat'
+    assert_select '.js-tag', 'Tags:'
+    assert_select 'a', 'cat'
+    assert_select 'a', 'animal'
+  end
+
   test 'tag should link to filtered images' do
     post_first = Post.create!(link: 'https://cdn.learnenough.com/kitten.jpg')
     post_first.tag_list.add('cat')
