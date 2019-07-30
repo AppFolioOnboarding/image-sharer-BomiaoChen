@@ -24,6 +24,16 @@ class PostsController < ApplicationController
     @posts = Post.all.reverse
   end
 
+  def tagged
+    @posts = if params[:tag].present?
+               Post.tagged_with(params[:tag]).reverse
+             else
+               Post.all.reverse
+             end
+
+    url_not_found(@posts, 'tagged', 'Tag not found', posts_path)
+  end
+
   private
 
   def post_params
