@@ -17,12 +17,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.find_by(id: params[:id])
 
-    if @post.present?
-      render 'show'
-    else
-      flash[:error] = 'Image not found'
-      redirect_to new_post_path
-    end
+    url_not_found(@post, 'show', 'Image not found', new_post_path)
   end
 
   def index
@@ -33,5 +28,14 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:link, :caption, :tag_list)
+  end
+
+  def url_not_found(var, action, info, path)
+    if var.present?
+      render action
+    else
+      flash[:error] = info
+      redirect_to path
+    end
   end
 end
