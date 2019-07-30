@@ -1,11 +1,12 @@
 require 'test_helper'
 
 class PostControllerTest < ActionDispatch::IntegrationTest
-  test 'should get link and caption' do
+  test 'should get link and tag list and caption' do
     get new_post_path
 
     assert_response :ok
     assert_select '.js-link', 'Link *'
+    assert_select '.js-tag_list', 'Tag list'
     assert_select '.js-caption', 'Caption'
   end
 
@@ -37,10 +38,12 @@ class PostControllerTest < ActionDispatch::IntegrationTest
 
   test 'should get post information' do
     post = Post.create!(link: 'https://cdn.learnenough.com/kitten.jpg')
+    post.tag_list.add('cat')
     get post_path(post)
 
     assert_response :ok
     assert_select 'img[src=?]', 'https://cdn.learnenough.com/kitten.jpg'
+    assert_not post.tag_list.empty?
   end
 
   test 'should go back home if id is invalid' do
