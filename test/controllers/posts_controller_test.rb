@@ -74,13 +74,35 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'images are with associated tags' do
+  test 'images are with associated tags link' do
     post_first = Post.create!(link: 'https://cdn.learnenough.com/kitten.jpg')
     post_first.tag_list.add('cat')
+    post_first.tag_list.add('animal')
     post_first.save
     get posts_path
 
     assert_response :ok
-    assert_select '.js-tag', 'Tags: cat'
+    assert_select '.js-tag', 'Tags:'
+    assert_select 'a', 'cat'
+    assert_select 'a', 'animal'
+  end
+
+  test 'tag should link to filtered images' do
+    post_first = Post.create!(link: 'https://cdn.learnenough.com/kitten.jpg')
+    post_first.tag_list.add('cat')
+    post_first.save
+    get posts_path(tag: 'cat')
+
+    assert_response :ok
+    assert_select 'a[href=?]', new_post_path
+    assert_select 'a[href=?]', posts_path
+    assert_select 'img[src=?]', 'https://cdn.learnenough.com/kitten.jpg'
+  end
+
+  test 'Invalid tag should redirect to posts' do
+    get posts_path(tag: 'wrong')
+
+    assert_redirected_to posts_path
+    assert_equal 'Tag not found', flash[:error]
   end
 end

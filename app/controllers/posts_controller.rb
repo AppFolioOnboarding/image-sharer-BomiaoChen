@@ -20,6 +20,17 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all.reverse
+    @title = 'All Images'
+
+    return if params[:tag].blank?
+
+    @posts = Post.tagged_with(params[:tag]).reverse
+    @title = 'Filtered Images'
+
+    return if @posts.present?
+
+    flash[:error] = 'Tag not found'
+    redirect_to posts_path
   end
 
   private
@@ -30,6 +41,7 @@ class PostsController < ApplicationController
 
   def valid_post
     @post = Post.find_by(id: params[:id])
+
     return if @post.present?
 
     flash[:error] = 'Image not found'
