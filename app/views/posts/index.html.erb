@@ -10,6 +10,8 @@
         <%= link_to tag, posts_path(tag: tag) %>
       <% end %>
     </div>
+    <div>
+      <%= link_to 'delete', post, method: :delete, data: { confirm: 'You Sure?' } %>
     </div>
   </div>
 <% end %>

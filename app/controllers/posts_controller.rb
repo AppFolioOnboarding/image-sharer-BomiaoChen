@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :valid_post, only: [:show]
+  before_action :valid_post, only: [:show, :destroy]
 
   def new
     @post = Post.new
@@ -30,6 +30,12 @@ class PostsController < ApplicationController
     return if @posts.present?
 
     flash[:error] = 'Tag not found'
+    redirect_to posts_path
+  end
+
+  def destroy
+    @post.destroy
+    flash[:notice] = 'Image deleted'
     redirect_to posts_path
   end
 
