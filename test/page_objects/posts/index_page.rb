@@ -30,3 +30,16 @@ module PageObjects
         alert.accept
         window.change_to(IndexPage)
       end
+
+      def click_tag!(tag_name, num:)
+        node.find(".js-post#{num}").click_on(tag_name)
+        window.change_to(IndexPage)
+      end
+
+      def clear_tag_filter!
+        node.click_on('All Images')
+        window.change_to(IndexPage)
+      end
+    end
+  end
+end
