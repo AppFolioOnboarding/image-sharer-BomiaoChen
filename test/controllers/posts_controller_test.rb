@@ -81,7 +81,6 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     get posts_path
 
     assert_response :ok
-    assert_select '.js-tag', 'Tags:'
     assert_select 'a', 'cat'
     assert_select 'a', 'animal'
   end
