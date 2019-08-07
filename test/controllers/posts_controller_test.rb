@@ -7,7 +7,6 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_select '.js-link', 'Link *'
     assert_select '.js-tag_list', 'Tag list'
-    assert_select '.js-caption', 'Caption'
   end
 
   test 'invalid post information' do
