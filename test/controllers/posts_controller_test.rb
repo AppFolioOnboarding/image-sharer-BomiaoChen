@@ -119,11 +119,11 @@ class PostControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'invalid delete posts should not work' do
-      assert_difference('Post.count', 0) do
-        delete post_path(1)
-      end
-
-      assert_redirected_to new_post_path
-      assert_equal 'Image not found', flash[:error]
+    assert_difference('Post.count', 0) do
+      delete post_path(1)
     end
+
+    assert_redirected_to new_post_path
+    assert_equal 'Image not found', flash[:error]
+  end
 end

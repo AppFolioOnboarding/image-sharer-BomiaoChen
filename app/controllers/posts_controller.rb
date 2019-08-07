@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :valid_post, only: [:show, :destroy]
+  before_action :valid_post, only: %i[show destroy]
 
   def new
     @post = Post.new
