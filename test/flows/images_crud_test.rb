@@ -2,28 +2,30 @@ require 'flow_test_helper'
 
 class PostsCrudTest < FlowTestCase
   test 'add an image' do
-    images_index_page = PageObjects::Images::IndexPage.visit
+    posts_index_page = PageObjects::Posts::IndexPage.visit
 
-    new_image_page = images_index_page.add_new_image!
+    new_post_page = posts_index_page.add_new_post!
 
-    tags = %w(foo bar)
-    new_image_page = new_image_page.create_image!(
-      url: 'invalid',
-      tags: tags.join(', ')
-    ).as_a(PageObjects::Images::NewPage)
-    assert_equal 'must be a valid URL', new_image_page.url.error_message
+    caption = %w[foo bar]
+    new_post_page = new_post_page.create_post!(
+      link: 'invalid',
+      caption: caption.join(', ')
+    ).as_a(PageObjects::Posts::NewPage)
+    assert_equal 'Image URL Invalid', new_post_page.flash_message('danger')
 
-    image_url = 'https://media3.giphy.com/media/EldfH1VJdbrwY/200.gif'
-    new_image_page.url.set(image_url)
+    post_link = 'https://media3.giphy.com/media/EldfH1VJdbrwY/200.gif'
 
-    image_show_page = new_image_page.create_image!
-    assert_equal 'You have successfully added an image.', image_show_page.flash_message(:success)
+    post_index_page = new_post_page.create_post!(
+      link: post_link,
+      caption: caption.join(', ')
+    ).as_a(PageObjects::Posts::IndexPage)
+    assert_equal 'Post successfully created', post_index_page.flash_message('notice')
 
-    assert_equal image_url, image_show_page.image_url
-    assert_equal tags, image_show_page.tags
+    posts_index_page = PageObjects::Posts::IndexPage.visit
+    assert posts_index_page.showing_post?(link: post_link, caption: 'foo bar', num: 1)
 
-    images_index_page = image_show_page.go_back_to_index!
-    assert images_index_page.showing_image?(url: image_url, tags: tags)
+    show_post_page = PageObjects::Posts::ShowPage.visit(1)
+    assert show_post_page.showing_post?(post_link)
   end
 
   test 'delete an image' do
