@@ -1,9 +1,6 @@
 <h1 class='js-title'><%= @title %></h1>
 <div><%= link_to 'New Image', new_post_path %></div>
 <div><%= link_to 'All Images', posts_path %></div>
-    </div>
-    <div>
-      <%= link_to 'delete', post, method: :delete, data: { confirm: 'You Sure?' } %>
 <div class="js-posts">
   <% @posts.each do |post| %>
     <div class="js-post" >
@@ -14,6 +11,9 @@
           <% post.tag_list.each do |tag| %>
             <%= link_to tag, posts_path(tag: tag) %>
           <% end %>
+      </div>
+      <div>
+        <%= link_to 'delete', post, method: :delete, data: { confirm: 'You Sure?' }, class: "js-delete#{post.id}" %>
       </div>
     </div>
   <% end %>

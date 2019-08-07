@@ -18,3 +18,15 @@ module PageObjects
           post.link == link && node.find(".js-post#{num}").text == caption
         end
       end
+
+      def delete(num:)
+        node.find(".js-delete#{num}").click
+        yield node.driver.browser.switch_to.alert
+      end
+
+      def delete_and_confirm!(num:)
+        node.find(".js-delete#{num}").click
+        alert = node.driver.browser.switch_to.alert
+        alert.accept
+        window.change_to(IndexPage)
+      end
