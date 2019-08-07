@@ -7,7 +7,6 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     assert_response :ok
     assert_select '.js-link', 'Link *'
     assert_select '.js-tag_list', 'Tag list'
-    assert_select '.js-caption', 'Caption'
   end
 
   test 'invalid post information' do
@@ -82,7 +81,6 @@ class PostControllerTest < ActionDispatch::IntegrationTest
     get posts_path
 
     assert_response :ok
-    assert_select '.js-tag', 'Tags:'
     assert_select 'a', 'cat'
     assert_select 'a', 'animal'
   end
@@ -104,5 +102,26 @@ class PostControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to posts_path
     assert_equal 'Tag not found', flash[:error]
+  end
+
+  test 'delete posts should work' do
+    post_first = Post.create!(link: 'https://cdn.learnenough.com/kitten.jpg')
+    post_first.save
+
+    assert_difference('Post.count', -1) do
+      delete post_path(post_first.id)
+    end
+
+    assert_redirected_to posts_path
+    assert_equal 'Image deleted', flash[:notice]
+  end
+
+  test 'invalid delete posts should not work' do
+    assert_difference('Post.count', 0) do
+      delete post_path(1)
+    end
+
+    assert_redirected_to new_post_path
+    assert_equal 'Image not found', flash[:error]
   end
 end
