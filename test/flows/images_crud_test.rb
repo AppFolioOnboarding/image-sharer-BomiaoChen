@@ -1,6 +1,6 @@
 require 'flow_test_helper'
 
-class ImagesCrudTest < FlowTestCase
+class PostsCrudTest < FlowTestCase
   test 'add an image' do
     images_index_page = PageObjects::Images::IndexPage.visit
 
