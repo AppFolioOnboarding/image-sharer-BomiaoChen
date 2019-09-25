@@ -3,6 +3,7 @@ module.exports = {
   plugins: [
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
-    '@babel/plugin-transform-object-assign'
+    '@babel/plugin-transform-object-assign',
+    '@babel/plugin-transform-async-to-generator'
   ]
 };
