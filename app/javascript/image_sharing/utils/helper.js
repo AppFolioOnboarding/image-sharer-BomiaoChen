@@ -6,6 +6,12 @@ const HEADERS = {
   'X-Requested-With': 'XMLHttpRequest' // make backwards compatible with rails "request.xhr?"
 };
 
+const HOSTNAME = `${window.location.protocol}//${window.location.host}`;
+
+function href(path) {
+  return path.match(/^http/) ? path : `${HOSTNAME}${path}`;
+}
+
 function getCsrfToken() {
   const meta = document.querySelector('meta[name="csrf-token"]');
   return meta ? meta.getAttribute('content') : '';
@@ -63,7 +69,7 @@ function checkResponseStatus(res) {
  * Perform an HTTP POST to the API and parse the response as JSON
  */
 export function post(path, body) {
-  return fetch(path, {
+  return fetch(href(path), {
     body: JSON.stringify(body),
     credentials: 'same-origin',
     headers: Object.assign({ 'X-CSRF-Token': getCsrfToken() }, HEADERS),
