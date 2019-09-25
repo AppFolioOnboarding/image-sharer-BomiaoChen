@@ -3,6 +3,7 @@
 import Footer from '../../components/Footer';
 import React from 'react';
 import { shallow } from 'enzyme';
+import { describe, it } from 'mocha';
 
 const assert = require('assert');
 

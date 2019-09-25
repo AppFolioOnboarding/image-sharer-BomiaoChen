@@ -1,19 +1,43 @@
-import { observable, computed, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
+import { postFeedback } from '../services/PostFeedbackService';
 
 export class FeedbackStore {
-  @observable feedbacks = [];
+  @observable submitMessage = {
+    status: '',
+    text: ''
+  };
+
+  @observable name = '';
+  @observable comment = '';
 
   @action
-  addFeedback(feedback) {
-    this.feedbacks.push(feedback);
+  updateSubmitMessage = (status, text) => {
+    this.submitMessage.status = status;
+    this.submitMessage.text = text;
+  };
+
+  @action
+  updateName = (event) => {
+    this.name = event.target.value;
+  };
+
+  @action
+  updateComment = (event) => {
+    this.comment = event.target.value;
+  };
+
+  @action.bound
+  submitFeedback(e) {
+    e.preventDefault();
+    postFeedback({ name: this.name, comment: this.comment }).then(() => {
+      this.updateSubmitMessage('success', 'success');
+    }).catch(() => {
+      this.updateSubmitMessage('danger', 'Try again');
+    });
   }
 
-  @computed get report() {
-    if (this.feedbacks.length === 0) {
-      return '<none>';
-    }
-    return `Latest feedback: ${this.feedbacks[0].name}: ${this.feedbacks[0].comment}.\n` +
-      `Number of feedback: ${this.feedbacks.length}`;
+  @computed get displayFlashMessage() {
+    return this.submitMessage.status;
   }
 }
 
