@@ -1,6 +1,7 @@
 /* eslint import/no-extraneous-dependencies: 1 */
 
 import 'jsdom-global/register';
+import jsdom from 'jsdom-global';
 import Adapter from 'enzyme-adapter-react-16/build/index';
 import { configure } from 'enzyme';
 
@@ -21,3 +22,15 @@ process.prependListener('exit', (code) => {
     process.exit(1);
   }
 });
+
+import fetch from 'node-fetch';
+
+//
+// Set up the DOM
+//
+jsdom(undefined, { url: 'https://example.appfolio.com' });
+
+//
+// Use the Fetch polyfill
+//
+global.fetch = fetch;
